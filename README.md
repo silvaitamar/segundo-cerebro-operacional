@@ -11,6 +11,7 @@ Origem: operação WordPress com agentes (MCP, WP-CLI). O mesmo contrato serve a
 | Licença | [MIT](LICENSE) |
 | Atualização | 2026-09-17 |
 | Autor | [Itamar Silva](https://github.com/silvaitamar) |
+| Apoio | [GitHub Sponsors](https://github.com/sponsors/silvaitamar) · [Buy Me a Coffee](https://buymeacoffee.com/silva.itamar) |
 | Conteúdo | `README.md` · `templates/` · `examples/` |
 
 Cada sessão de agente começa amnésica. O segundo cérebro é o Markdown que o próximo agente lê antes de agir e grava ao parar. Extrai conhecimento. Não despeja conversa.
@@ -31,6 +32,7 @@ Cada sessão de agente começa amnésica. O segundo cérebro é o Markdown que o
 - [Anti-padrões](#anti-padrões)
 - [Perguntas frequentes](#perguntas-frequentes)
 - [Conteúdo do repositório](#conteúdo-do-repositório)
+- [Apoio](#apoio)
 - [Licença](#licença)
 
 ## Definição
@@ -304,12 +306,17 @@ O pacote mínimo reduz retrabalho. Ops em chat exclusivo. Catálogo para não re
 segundo-cerebro-operacional/
   README.md
   LICENSE
+  .github/FUNDING.yml
   templates/vault/          cockpit, modelos, cliente-a genérico
   examples/skills/          segundo-cerebro · ambiente-local (exemplos)
   examples/rules/           captura, ponte, privacidade, glob, commits
 ```
 
 Placeholders públicos: `cliente-a`, `projeto-exemplo`, `/caminho/do/vault`. Nada de conta real.
+
+## Apoio
+
+Quem quiser pagar um café: [GitHub Sponsors](https://github.com/sponsors/silvaitamar) ou [Buy Me a Coffee](https://buymeacoffee.com/silva.itamar). O botão **Sponsor** do repositório aponta para os dois.
 
 ## Licença
 
