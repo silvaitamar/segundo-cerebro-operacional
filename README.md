@@ -1,157 +1,172 @@
 # Segundo cérebro operacional
 
-Kit para montar um **segundo cérebro** — memória operacional em Markdown para trabalhar com agentes de IA. Não é um produto. Não é o vault de ninguém. Copie, corte, renomeie.
+**Segundo cérebro operacional** é memória em Markdown — em geral um vault [Obsidian](https://obsidian.md) — que um agente de IA lê no início da sessão e atualiza ao fechar: estado atual, diário, decisões e uma lista canônica do que falta.
 
-Guia: as seções numeradas estão neste README. Templates em `templates/vault/`. Skills e rules em `examples/`. Licença MIT.
+Este repositório é o kit público do padrão: texto de referência, [templates do vault](templates/vault/) e [stubs de skills e rules](examples/). Não é um produto, não é um curso e **não é o vault de ninguém**. O texto e os stubs acompanham a evolução do sistema (vault, skills, rules, catálogo de ambiente) e mudam quando o padrão muda.
 
-## Em uma tela
+Origem: operação WordPress com agentes (MCP, WP-CLI). O mesmo contrato serve a qualquer ops em que o contexto some quando o chat fecha.
 
-O segundo cérebro **não** é um caderno de notas bonitas. É **memória operacional em Markdown**: onde paramos, o que foi decidido, o que vem a seguir.
+| | |
+|---|---|
+| Licença | [MIT](LICENSE) |
+| Atualização | 2026-09-17 |
+| Autor | [Itamar Silva](https://github.com/silvaitamar) |
+| Conteúdo | `README.md` · `templates/` · `examples/` |
 
-Cada chat de agente começa amnésico. O vault é o que o próximo chat **lê antes de agir** e o que ele **escreve ao fechar** — extraído, nunca o transcript.
+Cada sessão de agente começa amnésica. O segundo cérebro é o Markdown que o próximo agente lê antes de agir e grava ao parar. Extrai conhecimento. Não despeja conversa.
 
-Três camadas:
+## Sumário
 
-1. **Porta** — MCP, CLI, APIs: o agente toca o mundo.
-2. **Ambiente** — skills/rules + catálogo da *sua* máquina: como rodar um comando sem improvisar.
-3. **Segundo cérebro** — vault: estado, diário, decisões, contas.
+- [Definição](#definição)
+- [Continuidade entre sessões](#continuidade-entre-sessões)
+- [Arquitetura: porta, ambiente e vault](#arquitetura-porta-ambiente-e-vault)
+- [Skills, rules e autoalimentação](#skills-rules-e-autoalimentação)
+- [Estrutura do vault](#estrutura-do-vault)
+- [Tipos de nota](#tipos-de-nota)
+- [Rituais de sessão](#rituais-de-sessão)
+- [Restrições](#restrições)
+- [Contrato com o agente](#contrato-com-o-agente)
+- [Adoção](#adoção)
+- [O que é estável e o que evolui](#o-que-é-estável-e-o-que-evolui)
+- [Anti-padrões](#anti-padrões)
+- [Perguntas frequentes](#perguntas-frequentes)
+- [Conteúdo do repositório](#conteúdo-do-repositório)
+- [Licença](#licença)
 
-Três rituais: **retomar** (ler o checkpoint) · **registrar** (extrair o trabalho) · **fechar** (atualizar o checkpoint).
+## Definição
 
-Três regras: **sem segredos** · **extrair, não despejar** · **editar o trecho, não reescrever a nota**.
+O segundo cérebro operacional **não** é um caderno de notas bonitas. É o checkpoint da mesa de trabalho.
 
-O vault **não** é skills, rules nem catálogo. Esses artefatos (fora do vault) ensinam o agente *como* operar e **autoalimentar** o próximo chat — senão o segundo cérebro envelhece e o shell se improvisa.
+Peças mínimas:
 
-## Como usar este kit
+| Peça | Função |
+|------|--------|
+| Estado atual | Onde paramos e o que vem a seguir |
+| Diário | Extração do dia, não knowledge base |
+| Prioridades | Agora / depois / incubado |
+| Decisões | Uma por nota, recuperáveis |
+| Contas ou projetos | Visão + **uma** lista canônica do que falta |
 
-1. Leia as seções numeradas abaixo (a seção 0 já está no topo).
-2. Copie `templates/vault/` para a pasta do seu vault Obsidian (ou só para uma pasta de Markdown).
-3. Preencha `00-painel/estado-atual.md` e `00-painel/prioridades.md` com a mesa *real* de hoje — não com pastas vazias.
-4. Copie `examples/skills/` para `~/.cursor/skills/` (ou o equivalente do seu agente) e ajuste `/caminho/do/vault`.
-5. Copie `examples/rules/` para `~/.cursor/rules/` se o seu agente tiver rules always-on / glob.
-6. Rode **um** ritual de verdade (retomar ou fechar). Sem o primeiro ciclo, o kit é pasta com nomes bonitos.
+O agente lê isso no início e escreve no fechamento. MCP ou CLI abrem a porta para o mundo real; o segundo cérebro diz o que já se sabe. O que se publica neste kit é a **estrutura**, não o conteúdo de contas.
 
-Não publique o *seu* vault, o catálogo da sua máquina, nem pasta de clientes com dados.
+O vault **não** substitui skills, rules nem o catálogo da máquina. Esses artefatos ficam fora do vault: ensinam *como* operar e **autoalimentam** o chat seguinte. Sem eles o segundo cérebro envelhece e o shell se improvisa.
 
-O domínio de origem do texto é manutenção WordPress com agentes (MCP, WP-CLI). O padrão serve a qualquer ops em que o contexto se perde quando o chat fecha.
+## Continuidade entre sessões
 
-## Licença
-
-[MIT](LICENSE) — uso irrestrito, inclusive comercial. Mantenha o aviso da licença nas cópias substanciais.
-
-Este repositório **é** o kit: este `README.md`, `templates/` e `examples/`. Clone, copie para o seu vault e para `~/.cursor/` (ou o equivalente do seu agente). Não é o segundo cérebro de ninguém — é o ponto de partida.
-
----
-
-## 1. O que é (40 segundos)
-
-Não é “notas bonitas”. É memória operacional em arquivos Markdown (tipicamente num vault Obsidian):
-
-- **estado atual** — checkpoint: onde paramos, próximas ações;
-- **diário** — log do dia, extraído;
-- **prioridades** — agora / depois / incubado;
-- **decisões** — uma por nota, recuperáveis;
-- **contas ou projetos** — visão + *uma* lista canônica do que falta.
-
-O agente **lê** isso no início da sessão e **escreve** no fechamento. MCP (ou CLI) abre a porta; o segundo cérebro diz o que já sabemos. Pasta de cliente no ar? Não. Mostra-se a **estrutura**, não o conteúdo.
-
-Fala pronta:
-
-> Cada chat esquece. O segundo cérebro é o Markdown que o próximo agente lê antes de agir e atualiza ao parar: estado, diário, decisões. Extrai conhecimento. Não despeja conversa.
-
----
-
-## 2. Por que existe
-
-Agentes são excelentes em executar e péssimos em lembrar o chat anterior. Sem um lugar canônico:
+Agentes executam bem e lembram mal o chat anterior. Sem um lugar canônico:
 
 - o mesmo diagnóstico se refaz;
-- a pendência vive no briefing, no diário *e* no WhatsApp — e some na retomada;
-- a decisão “não fazer X” morre no transcript;
-- o próximo modelo inventa um roadmap porque não leu *onde paramos*.
+- a pendência vive no briefing, no diário e no WhatsApp — e some na retomada;
+- a decisão de *não* fazer algo morre no transcript;
+- o modelo seguinte inventa um roadmap porque não leu *onde paramos*.
 
-O objetivo **não** é disciplina perfeita. É **continuidade**: voltar depois de três dias e, em cinco minutos, saber o que está na mesa.
+O objetivo não é disciplina perfeita. É **continuidade**: voltar depois de dias parado e, em poucos minutos, saber o que está na mesa. Um checkpoint honesto vence um vault “completo” que ninguém atualiza.
 
 ```text
 Informação (chat, export, código)
         → extração
-Consolidação em nota viva
+Nota viva
         → knowledge base + memória operacional
-Consulta no chat seguinte (@ anexar o pacote mínimo)
+Consulta na sessão seguinte (pacote mínimo, não o vault inteiro)
 ```
 
-**Continuidade > disciplina.** Um checkpoint honesto vence um vault “completo” que ninguém atualiza.
+## Arquitetura: porta, ambiente e vault
 
----
-
-## 3. Três camadas do stack
+Três camadas distintas. Confundi-las é a origem da maior parte da confusão.
 
 ```text
-                    você pergunta
-                         │
-                         ▼
                       [agente]
                          │
          ┌───────────────┼───────────────┐
          ▼               ▼               ▼
-     1. PORTA       2. AMBIENTE     3. SEGUNDO CÉREBRO
-     MCP / CLI      skills, rules   vault Markdown
-     WP-CLI, APIs   catálogo        estado · diário
-     (exemplo WP)   snapshot        decisões · contas
+       PORTA         AMBIENTE      SEGUNDO CÉREBRO
+     MCP / CLI     skills, rules    vault Markdown
+     APIs, WP-CLI  catálogo         estado · diário
+                   snapshot         decisões · contas
 ```
 
-| Camada | Papel | O que **não** é |
-|--------|--------|-----------------|
-| Porta | Deixa o agente *ver* e, com freio, *agir* no sistema real | A memória do projeto |
+| Camada | Papel | Não é |
+|--------|--------|--------|
+| Porta | Ver e, com freio, agir no sistema real | A memória do projeto |
 | Ambiente | Receitas validadas *desta* máquina | O backlog da conta |
-| Segundo cérebro | O *quê* existe e *onde paramos* | Dump de chats |
+| Segundo cérebro | O *quê* existe e *onde paramos* | Dump de chats nem um segundo gerenciador de tarefas |
 
-A implementação do agente (skill, rules) fica **fora** do vault, em `~/.cursor/skills/…`.
+A porta sem cérebro alucina contexto. O cérebro sem porta descreve o mundo sem tocá-lo. O ambiente sem os dois faz o agente improvisar `PATH` a cada sessão.
 
-### Skill vs rule vs autoalimentação
+Skills e rules ficam **fora** do vault (`~/.cursor/skills/`, `~/.cursor/rules/`, ou o equivalente da ferramenta).
+
+Dentro do vault há três funções (não são pastas obrigatórias no primeiro dia):
+
+1. **Knowledge base** — o que é estável.
+2. **Memória operacional** — estado-atual e diário.
+3. **Direção** — prioridades, roteiros, contas.
+
+A retomada começa na memória operacional, não na biblioteca.
+
+## Skills, rules e autoalimentação
 
 | Artefato | Onde | Papel |
 |----------|------|--------|
 | Vault | `/caminho/do/vault` | O *quê* e *onde paramos* |
 | Skill | `~/.cursor/skills/<nome>/SKILL.md` | Playbook sob demanda |
 | Rule always-on | `~/.cursor/rules/*.mdc` | Cartão curto em todo chat |
-| Rule com glob | mesma pasta, `globs:` | Convenções ao tocar o vault |
+| Rule com glob | a mesma pasta, `globs:` | Convenções ao tocar o vault |
 | Snapshot + catálogo | junto da skill de ambiente | Verdade *desta* máquina |
 | Cookbook de domínio | junto da skill de domínio | Receitas do ofício (ex.: WP-CLI) |
 
-Três skills-núcleo (copie a *função*, não o nome): `segundo-cerebro` · `ambiente-local` · skill de domínio.
+Skill é longa e tem fluxos. Rule always-on é um cartão: aponta para a skill; não cola o catálogo no contexto de todos os chats. Meter o vault ou o cookbook no always-on come token e é o contrário de context engineering.
 
-**Autoalimentação:** armadilha ou tipo novo de operação → receita no catálogo/cookbook **neste turno**, antes da resposta final. Sem senha.
+Três funções-núcleo (os nomes são exemplos; copia-se a função):
 
-**Não conta:** ter acertado neste chat; ter escrito só no vault; improvisar “só desta vez”.
+1. **Segundo cérebro** — ler e escrever o vault (rituais, granularidade, sem segredos).
+2. **Ambiente local** — como *esta* máquina executa comando (shell, PATH, armadilha).
+3. **Domínio** — no exemplo WordPress: detectar ambiente, não editar core, mutação só com flag explícita. Em outro ofício: o equivalente.
 
-**Teste:** o próximo chat copia o catálogo, não o transcript.
+Rules always-on que cabem num cartão: captura ao fechar; ponte “antes do terminal, a skill de ambiente”; privacidade em repo público; commit só com pedido; um guardrail estreito de produção. O detalhe longo permanece sob demanda.
 
-Always-on curto; catálogo e vault longos sob demanda. Gates humanos: commit, produção, dinheiro.
+### Autoalimentação
 
----
+Cada chat começa amnésico. Se a descoberta ficar só no transcript, o próximo agente repete o erro. Autoalimentação é gravar a receita no artefato durável **neste turno**, antes da resposta final.
 
-## 4. Mapa de pastas sugerido
+```text
+armadilha ou tipo novo de operação
+        ↓  mesmo turno
+catálogo da máquina  ou  cookbook de domínio
+        ↓
+o próximo chat copia o artefato, não o transcript
+```
 
-Crie pasta quando o primeiro arquivo real existir. Números ordenam o Explorer.
+Gatilho: primeira vez daquele tipo de comando; armadilha nova; snapshot divergente da realidade; o ambiente mudou.
+
+Não conta: ter acertado neste chat; ter escrito só no vault da conta; improvisar “só desta vez”.
+
+Teste: se o próximo agente precisa copiar o comando do transcript, a regra falhou neste turno.
+
+O segundo cérebro registra *que* a sessão aconteceu e *onde paramos*. A autoalimentação registra *como* repetir a operação. Um não substitui o outro.
+
+Gates humanos (não são o vault): commit, push, tag; mutação em produção; promover receita interna a este repositório público. Tokens e nomes de conta nunca no git público.
+
+## Estrutura do vault
+
+Números no começo ordenam o Explorer. Cria-se pasta quando o primeiro arquivo real existir. Pastas vazias não ajudam.
 
 ```text
 /caminho/do/vault/
-  00-painel/            cockpit
+  00-painel/              cockpit
     estado-atual.md
     prioridades.md
     retomar-sessao.md
     diario/YYYY-MM-DD.md
-  01-marca/             identidade (se fizer sentido)
+  01-marca/               identidade (se fizer sentido)
   02-servicos/
   03-produtos/
-  04-dominio/           conhecimento estável da sua área
+  04-dominio/             conhecimento estável da área
   05-laboratorio/
   06-clientes/cliente-a/
     visao-geral.md
-    pendencias.md       ← lista canônica
+    pendencias.md         ← lista canônica
     infraestrutura.md
-    material-bruto/     ← já redigido
+    material-bruto/       ← já redigido
   07-infraestrutura/
   08-roteiros/
   09-conteudo/
@@ -163,117 +178,139 @@ Crie pasta quando o primeiro arquivo real existir. Números ordenam o Explorer.
   99-arquivo/
 ```
 
-Neste kit, o mínimo já está em `templates/vault/`.
+O mínimo deste kit está em [`templates/vault/`](templates/vault/).
 
-Item simples → **nota única**. Item rico → pasta com `visao.md` + satélites só com conteúdo. Nunca pasta vazia.
+Item simples e estável → **nota única**. Item com várias dimensões vivas → **pasta** com `visao.md` e satélites só os que tiverem conteúdo. Nunca pasta vazia; promove-se quando a nota passa de uma tela ou mistura assuntos.
 
----
+Pastas `01`–`12` e o rótulo “clientes” vs “times” são adaptáveis. `14-negocios/` só existe com dado financeiro real.
 
-## 5. Tipos principais de notas
+## Tipos de nota
+
+O `tipo` no frontmatter é o contrato com o agente: o que a nota *é* e o que ela não substitui.
 
 | `tipo` | Arquivo | Serve para | Não é |
 |--------|---------|------------|--------|
 | `painel` | `estado-atual.md` | Checkpoint da mesa | Backlog de uma conta |
 | `diario` | `diario/YYYY-MM-DD.md` | Extração do dia | Knowledge base |
-| `procedimento` | `retomar-sessao.md` | Ritual | O que aconteceu hoje |
+| `procedimento` | `retomar-sessao.md` | Ritual repetível | O que aconteceu hoje |
 | `cliente` | `visao-geral.md` | Hub da conta | Lista de pendências |
 | — | `pendencias.md` | **Único** backlog da conta | Briefing |
-| `produto` / `lab` | `visao.md` | Hub em evolução | Pasta vazia |
+| `produto` / `lab` | `visao.md` | Item em evolução | Pasta vazia |
 | — | `15-decisoes/slug.md` | Decisão recuperável | Insight só no diário |
 
-**Estado-atual:** atualizar ao parar. Seções: foco · onde paramos · próximas ações (3–5). Edição cirúrgica.
+**Estado atual.** Atualizar ao parar. Seções: foco, onde paramos, próximas ações (3–5). Edição cirúrgica: muda-se a subseção tocada e a data, não a nota inteira.
 
-**Pendências:** checkboxes abertos no topo. Item só no briefing **não existe** na retomada.
+**Pendências.** Checkboxes abertos no topo. Item que só existe no briefing **não existe** na retomada.
 
-**Decisão:** uma por nota + linha no índice. Data, contexto (uma frase), decisão, consequências.
+**Decisão.** Uma por nota e uma linha no índice. Data, contexto (uma frase), decisão, consequências.
 
-Frontmatter opcional no dia 1: `tipo`, `status`, `prioridade`, `area`, `tags`. Wikilink com caminho da raiz. Não use `[[caminho|alias]]` dentro de tabela.
+Frontmatter opcional no primeiro dia: `tipo`, `status`, `prioridade`, `area`, `tags`. Wikilink com caminho desde a raiz. Não usar `[[caminho|alias]]` dentro de célula de tabela. Datas: `YYYY-MM-DD`.
 
-Os arquivos em `templates/vault/` e `13-modelos/` são os modelos prontos para copiar.
+Modelos em [`templates/vault/13-modelos/`](templates/vault/13-modelos/).
 
----
+## Rituais de sessão
 
-## 6. Rituais
+**Retomar.** Estado atual → últimos dois ou três diários → prioridades → um projeto, até três tarefas, o que não abrir. A biblioteca não é o ponto de partida.
 
-**Retomar (~5 min):** estado-atual → últimos 2–3 diários → prioridades → um projeto, até 3 tarefas, o que não abrir. Não abrir a biblioteca primeiro.
+**Registrar.** Gatilho: trabalho relevante (código, decisão, marco, conta). Diário do dia + estado atual cirúrgico + `pendencias.md` se a conta mudou + uma nota de decisão se nasceu uma. Q&A trivial não entra.
 
-**Registrar:** diário + estado-atual cirúrgico + `pendencias.md` se a conta mudou + uma decisão se nasceu uma.
+**Fechar.** Checklist em [`templates/vault/13-modelos/modelo-fechamento-sessao.md`](templates/vault/13-modelos/modelo-fechamento-sessao.md).
 
-**Fechar:** checklist em `templates/vault/13-modelos/modelo-fechamento-sessao.md`.
+Chat de organização não vira chat de execução de código.
 
-Chat de organização não vira chat de código.
-
----
-
-## 7. Regras invioláveis
+## Restrições
 
 1. Sem segredos no Markdown (`[removido]`).
-2. Extrair, não despejar o chat.
+2. Extrair; não despejar o chat.
 3. Edição cirúrgica em notas curadas.
 4. Uma lista canônica por conta (`pendencias.md`).
-5. O agente não inventa convenções — lê os modelos.
+5. O agente não inventa convenções: lê os modelos.
 6. Referências congeladas são somente leitura.
-7. Não meter o vault inteiro em rule always-on.
+7. O vault inteiro não entra em rule always-on.
 
----
+## Contrato com o agente
 
-## 8. Como um agente usa
+No início: estado atual, dois ou três diários, prioridades, uma visão se o foco já estiver claro. Pacote de conta: cinco a sete arquivos, sempre com `pendencias.md`.
 
-Ler no início: estado-atual, 2–3 diários, prioridades, uma visão se o foco estiver claro. Pacote de conta: 5–7 arquivos, sempre com `pendencias.md`.
+Durante: tipo novo de operação → catálogo neste turno.
 
-Durante: tipo novo → catálogo neste turno.
+No fim: diário, estado atual, pendências, decisão. Resumo de duas ou três linhas. Override: gravar só o bloco para colar.
 
-Fim: diário, estado-atual, pendências, decisão. Resumo de 2–3 linhas. Override: “só me mostre o bloco para colar”.
+Stubs: [`examples/skills/`](examples/skills/) e [`examples/rules/`](examples/rules/).
 
-Stubs prontos: `examples/skills/` e `examples/rules/`.
+## Adoção
 
----
+1. Copiar [`templates/vault/`](templates/vault/) para `/caminho/do/vault/` (Obsidian ou qualquer pasta Markdown).
+2. Preencher `estado-atual.md` e `prioridades.md` com a mesa **real** — não com pastas vazias.
+3. Copiar [`examples/skills/`](examples/skills/) para `~/.cursor/skills/` (ou o equivalente) e ajustar o caminho do vault.
+4. Preencher o *próprio* `catalogo.md` da máquina. Esse arquivo **não** se publica (está no `.gitignore` deste kit).
+5. Copiar [`examples/rules/`](examples/rules/) se a ferramenta tiver always-on / glob.
+6. Rodar um ritual de verdade (retomar ou fechar). Sem o primeiro ciclo, o kit é pasta com nomes.
 
-## 9. Como começar do zero em uma tarde
+Não se publica o vault real, o catálogo da máquina, nem pasta de contas com dados.
 
-1. Copie `templates/vault/` para `/caminho/do/vault/`.
-2. Preencha estado-atual e prioridades com a mesa **real**.
-3. Copie `examples/skills/segundo-cerebro/SKILL.md` para `~/.cursor/skills/segundo-cerebro/` e ajuste o caminho do vault.
-4. Copie `examples/skills/ambiente-local/` e preencha *o seu* `catalogo.md` (não publique esse arquivo).
-5. Copie as rules em `examples/rules/` se o agente tiver always-on / glob.
-6. Rode um ritual hoje (retomar ou fechar).
+## O que é estável e o que evolui
 
----
+Este repositório **não** é o recorte de uma palestra. É o extrato público de um sistema em uso. Quando o vault, as skills ou as rules mudam de forma que altere o padrão, este texto e os stubs acompanham.
 
-## 10. O que adaptar
+| Estável (não “adaptar embora”) | Evolui com o ofício |
+|-------------------------------|---------------------|
+| Sem segredos | Árvore `01`–`12` |
+| Extrair, não despejar | “Clientes” vs “times” vs “projetos” |
+| Edição cirúrgica | Idioma das notas |
+| Lista canônica por conta | Porta (MCP, CLI, ou nenhum) |
+| Autoalimentação no mesmo turno | Catálogo *desta* máquina |
+| Três camadas (porta / ambiente / vault) | Skill de domínio, always-on vs sob demanda |
 
-Pastas `01`–`12`, se usa “clientes” ou “times”, idioma único, porta (MCP ou não), catálogo da máquina, skill de domínio, always-on vs sob demanda.
+O que **não** sobe aqui: receitas com path de máquina, hosts, nomes de conta, checklists internas. Sobe o padrão; o cookbook privado fica privado.
 
-Não adapte: sem segredos, extrair, cirúrgico, autoalimentação no mesmo turno.
+## Anti-padrões
 
----
+Dump de chat no vault · segundo backlog escondido no briefing · secrets no Markdown · always-on com o vault inteiro · improvisar o shell e deixar a receita no transcript · autoalimentação só no vault · reorganizar o vault no meio da execução · pastas vazias com estado atual velho · agente inventando convenção · tratar este README como script de aula em vez de especificação viva.
 
-## 11. Anti-padrões
+## Perguntas frequentes
 
-Dump de chat no vault · segundo backlog escondido · secrets no Markdown · always-on com o vault inteiro · improvisar o shell e deixar a receita no transcript · autoalimentação só no vault · reorganizar no meio da execução · pastas vazias com estado-atual velho · agente inventando convenção.
+### O segundo cérebro operacional precisa do Obsidian?
 
----
+Não. Precisa de arquivos em disco. Agentes leem Markdown. Obsidian é um viewer conveniente, não o requisito.
 
-## 12. FAQ
+### Funciona sem Cursor?
 
-**Tokens?** Pacote mínimo; ops em chat exclusivo; catálogo para não retryar. Vault fora do always-on.
+Sim. Qualquer agente que leia pastas, mais um humano no fechamento. Cursor é um jeito cômodo de carregar skills e rules.
 
-**Obsidian vs Notion?** Arquivo em disco. Agentes leem `.md`.
+### Dá para usar só local, sem MCP?
 
-**Precisa de Cursor?** Não. Qualquer agente que leia pastas + um humano no fechamento.
+Sim. A porta pode ser o terminal ou o output colado na sessão.
 
-**Só local, sem MCP?** Sim. A porta pode ser o terminal ou você colando output.
+### Qual a diferença para um “second brain” clássico (PARA, Zettelkasten)?
 
-**Gist?** Este kit é um repositório de propósito. Não publique o vault real.
+O foco aqui não é biblioteca pessoal nem criatividade. É **memória operacional para agentes**: checkpoint, lista canônica, decisão recuperável, autoalimentação do ambiente. Knowledge base existe, mas a retomada não começa nela.
 
-**Publicar minhas skills de verdade?** Não. Stubs e o padrão. Catálogo da máquina fica privado (`catalogo.md` está no `.gitignore`).
+### Gist resolve?
 
----
+Não carrega templates nem stubs. Este repositório existe por isso. O vault real continua privado.
 
-## Apêndices
+### Publico as skills da minha máquina?
 
-**A — Decisão:** data, contexto (uma frase), decisão, consequências; linha no índice. Modelo: `templates/vault/13-modelos/modelo-decisao.md`.
+Não. Publicam-se stubs e o padrão. `catalogo.md` e `snapshot.md` ficam fora do git público.
 
-**B — Material bruto:** redigir OTP/token/URL de bypass antes de derivar notas. `templates/vault/13-modelos/regra-material-bruto.md`.
+### Isso aumenta o uso de tokens?
 
-**C — Licença:** MIT (`LICENSE`). Use, copie, modifique, distribua, inclusive comercialmente. Mantenha o aviso da licença nas cópias substanciais. Não publique pasta de contas com dados reais.
+O pacote mínimo reduz retrabalho. Ops em chat exclusivo. Catálogo para não retryar o mesmo wrap. Vault **fora** do always-on.
+
+## Conteúdo do repositório
+
+```text
+segundo-cerebro-operacional/
+  README.md
+  LICENSE
+  templates/vault/          cockpit, modelos, cliente-a genérico
+  examples/skills/          segundo-cerebro · ambiente-local (exemplos)
+  examples/rules/           captura, ponte, privacidade, glob, commits
+```
+
+Placeholders públicos: `cliente-a`, `projeto-exemplo`, `/caminho/do/vault`. Nada de conta real.
+
+## Licença
+
+[MIT](LICENSE) — uso, cópia, modificação e distribuição, inclusive comercial. Manter o aviso da licença nas cópias substanciais.
