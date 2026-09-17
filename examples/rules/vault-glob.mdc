@@ -1,0 +1,18 @@
+---
+description: Convenções do vault — disparam ao trabalhar em arquivos do vault
+globs: "**/*.md"
+alwaysApply: false
+---
+
+# Vault — convenções
+
+Ao tocar em arquivo do vault, seguir a skill `segundo-cerebro`.
+
+- Frontmatter em notas de projeto/produto/cliente/lab/painel: `tipo`, `status`, `prioridade`, `area`, `tags`
+- Wikilinks com caminho da raiz; nunca `[[…|…]]` dentro de célula de tabela
+- Nunca gravar segredos; redigir `[removido]`
+- Não colar conversa inteira
+- Edições cirúrgicas em notas curadas (estado-atual, hubs)
+- Nova nota → pasta certa + modelo em `13-modelos/`
+
+Ajuste o `globs` para o caminho real do seu vault, para esta rule não disparar em todo Markdown do disco.

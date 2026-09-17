@@ -1,0 +1,13 @@
+---
+description: Ao encerrar sessão com trabalho relevante, registrar no vault
+alwaysApply: true
+---
+
+# Captura
+
+Código, decisão, marco ou conta → diário do dia + estado-atual cirúrgico.
+Pular Q&A trivial e exploração sem mudança. Não interromper no meio da tarefa.
+
+Sem segredos. Sem colar o chat. Default: gravar. Override: "só me mostre o bloco para colar".
+
+O detalhe está na skill `segundo-cerebro`. Não colar o vault neste cartão.

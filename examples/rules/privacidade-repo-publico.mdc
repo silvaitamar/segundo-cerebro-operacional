@@ -1,0 +1,12 @@
+---
+description: Não expor clientes, paths pessoais ou secrets em repositórios públicos
+alwaysApply: true
+---
+
+# Privacidade em repositório público
+
+Nunca commitar: nomes de clientes reais, URLs de staging, paths de usuário, checklists internas, tokens.
+
+No repo público, preferir placeholders (`Cliente A`, `projeto-exemplo`, `/caminho/do/vault`).
+
+Antes de push: revisar o diff. Segredos já publicados: remover do tree e considerar reescrever histórico se o push já ocorreu.

@@ -1,0 +1,14 @@
+---
+description: Commit só com pedido explícito; um commit por marco fechado
+alwaysApply: true
+---
+
+# Commits em fluxo com agentes
+
+Propor commit quando o código valida, a unidade de trabalho está fechada, e não há secrets no stage.
+
+Não commitar no meio de refactor incompleto ou porque "terminou um arquivo".
+
+Sugerir mensagem (Conventional Commits) e lista de arquivos. Não commitar sem pedido explícito, salvo o humano ter dito o contrário.
+
+Nunca incluir `.env`, credenciais, `node_modules/`, logs.
