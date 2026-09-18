@@ -6,13 +6,15 @@ Este repositório é o kit público do padrão: texto de referência, [templates
 
 Origem: operação WordPress com agentes (MCP, WP-CLI). O mesmo contrato serve a qualquer ops em que o contexto some quando o chat fecha.
 
-| | |
-|---|---|
-| Licença | [MIT](LICENSE) |
-| Atualização | 2026-09-17 |
-| Autor | [Itamar Silva](https://github.com/silvaitamar) |
-| Apoio | [GitHub Sponsors](https://github.com/sponsors/silvaitamar) · [Buy Me a Coffee](https://buymeacoffee.com/silva.itamar) |
-| Conteúdo | `README.md` · `templates/` · `examples/` |
+<table>
+<tbody>
+<tr><td>Licença</td><td><a href="LICENSE">MIT</a></td></tr>
+<tr><td>Atualização</td><td>2026-09-18</td></tr>
+<tr><td>Autor</td><td><a href="https://github.com/silvaitamar">Itamar Silva</a></td></tr>
+<tr><td>Apoio</td><td><a href="https://github.com/sponsors/silvaitamar">GitHub Sponsors</a> · <a href="https://buymeacoffee.com/silva.itamar">Buy Me a Coffee</a></td></tr>
+<tr><td>Conteúdo</td><td><code>README.md</code> · <code>templates/</code> · <code>examples/</code></td></tr>
+</tbody>
+</table>
 
 Cada sessão de agente começa amnésica. O segundo cérebro é o Markdown que o próximo agente lê antes de agir e grava ao parar. Extrai conhecimento. Não despeja conversa.
 
