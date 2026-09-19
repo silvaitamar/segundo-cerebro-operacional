@@ -1,0 +1,48 @@
+name: Adoção do kit
+description: Travou ao montar o próprio segundo cérebro a partir deste repositório.
+title: "[adoção] "
+labels: ["adopção"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use este formulário se o **bootstrap**, o vault mínimo ou as instruções de agente falharam.
+        Sem senhas, sem path com nome de conta, sem dump de vault real.
+  - type: dropdown
+    id: so
+    attributes:
+      label: Sistema
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Outro
+    validations:
+      required: true
+  - type: dropdown
+    id: agente
+    attributes:
+      label: Agente ou ferramenta
+      options:
+        - Cursor
+        - Claude Code / Claude.ai
+        - ChatGPT
+        - Copilot
+        - Só Markdown / Obsidian (sem agente)
+        - Outro
+    validations:
+      required: true
+  - type: textarea
+    id: tentou
+    attributes:
+      label: O que você tentou
+      description: Prompt de bootstrap, cópia manual, template GitHub, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: aconteceu
+    attributes:
+      label: O que aconteceu
+      description: Erro, pasta vazia, agente inventou convenção, tokens, path.
+    validations:
+      required: true

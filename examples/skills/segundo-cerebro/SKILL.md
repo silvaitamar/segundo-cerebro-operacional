@@ -8,7 +8,7 @@ description: >-
 # Segundo cérebro
 
 O vault em `/caminho/do/vault` é a fonte da verdade operacional.
-Não invente convenções: leia e aplique. Detalhe: o GUIA.md deste kit.
+Não invente convenções: leia e aplique. Spec do kit: README do repositório `segundo-cerebro-operacional`.
 
 ## Ao retomar
 

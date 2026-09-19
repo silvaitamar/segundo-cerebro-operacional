@@ -2,7 +2,7 @@
 
 **Segundo cérebro operacional** é memória em Markdown — em geral um vault [Obsidian](https://obsidian.md) — que um agente de IA lê no início da sessão e atualiza ao fechar: estado atual, diário, decisões e uma lista canônica do que falta.
 
-Este repositório é o kit público do padrão: texto de referência, [templates do vault](templates/vault/) e [stubs de skills e rules](examples/). Não é um produto, não é um curso e **não é o vault de ninguém**. O texto e os stubs acompanham a evolução do sistema (vault, skills, rules, catálogo de ambiente) e mudam quando o padrão muda.
+Este repositório é o kit público do padrão: texto de referência, [templates](templates/vault-minimo/), [prompts para agentes](prompts/bootstrap.md) e [stubs de skills e rules](examples/). Não é um produto, não é um curso e **não é o vault de ninguém**. O texto e os stubs acompanham a evolução do sistema (vault, skills, rules, catálogo de ambiente) e mudam quando o padrão muda.
 
 Origem: operação WordPress com agentes (MCP, WP-CLI). O mesmo contrato serve a qualquer ops em que o contexto some quando o chat fecha.
 
@@ -12,7 +12,7 @@ Origem: operação WordPress com agentes (MCP, WP-CLI). O mesmo contrato serve a
 <tr><td>Atualização</td><td>2026-09-18</td></tr>
 <tr><td>Autor</td><td><a href="https://github.com/silvaitamar">Itamar Silva</a></td></tr>
 <tr><td>Apoio</td><td><a href="https://github.com/sponsors/silvaitamar">GitHub Sponsors</a> · <a href="https://buymeacoffee.com/silva.itamar">Buy Me a Coffee</a></td></tr>
-<tr><td>Conteúdo</td><td><code>README.md</code> · <code>templates/</code> · <code>examples/</code></td></tr>
+<tr><td>Conteúdo</td><td><code>README.md</code> · <code>AGENTS.md</code> · <code>templates/</code> · <code>prompts/</code> · <code>examples/</code></td></tr>
 </tbody>
 </table>
 
@@ -21,6 +21,10 @@ Cada sessão de agente começa amnésica. O segundo cérebro é o Markdown que o
 ## Sumário
 
 - [Definição](#definição)
+- [Como começar (15 minutos)](#como-começar-15-minutos)
+- [Vault mínimo e vault completo](#vault-mínimo-e-vault-completo)
+- [Prompt para o agente](#prompt-para-o-agente)
+- [Exemplo de estado atual](#exemplo-de-estado-atual)
 - [Continuidade entre sessões](#continuidade-entre-sessões)
 - [Arquitetura: porta, ambiente e vault](#arquitetura-porta-ambiente-e-vault)
 - [Skills, rules e autoalimentação](#skills-rules-e-autoalimentação)
@@ -54,6 +58,44 @@ Peças mínimas:
 O agente lê isso no início e escreve no fechamento. MCP ou CLI abrem a porta para o mundo real; o segundo cérebro diz o que já se sabe. O que se publica neste kit é a **estrutura**, não o conteúdo de contas.
 
 O vault **não** substitui skills, rules nem o catálogo da máquina. Esses artefatos ficam fora do vault: ensinam *como* operar e **autoalimentam** o chat seguinte. Sem eles o segundo cérebro envelhece e o shell se improvisa.
+
+## Como começar (15 minutos)
+
+1. Copie [`templates/vault-minimo/`](templates/vault-minimo/) para `/caminho/do/vault/` (Obsidian ou qualquer pasta Markdown). Não crie as pastas `01`–`12` vazias.
+2. Cole o prompt em [`prompts/bootstrap.md`](prompts/bootstrap.md) no seu agente, com 3–5 frases da mesa **real**.
+3. Confira `00-painel/estado-atual.md` e `00-painel/prioridades.md` — se ainda estiver `projeto-exemplo` e você já descreveu o trabalho, o bootstrap falhou.
+4. Feche a sessão uma vez (diário de hoje + estado-atual). Sem esse ciclo, o kit é pasta com nomes.
+
+Contrato curto para o agente: [`AGENTS.md`](AGENTS.md). Cursor, Claude e ChatGPT: [`prompts/`](prompts/). Travou? [Issue de adoção](https://github.com/silvaitamar/segundo-cerebro-operacional/issues/new?template=adocao.yml).
+
+Quem mantém este repositório pode marcá-lo como **Template** no GitHub (Settings → General → Template repository). Quem adota clica **Use this template** e ganha uma cópia sem o histórico do kit — o vault dela deve ser **privado**.
+
+## Vault mínimo e vault completo
+
+| Uso | Dia 1 | Quando crescer |
+|------|-------|----------------|
+| Pasta | [`templates/vault-minimo/`](templates/vault-minimo/) | [`templates/vault/`](templates/vault/) |
+| O que vem | Cockpit, diário, fechamento, índice de decisões | + modelos, pasta `cliente-a` genérica |
+| O que não vem | `01`–`12` vazias | Pastas só quando o primeiro arquivo real existir |
+
+O mapa `01`–`12` no spec abaixo é **sugestão de crescimento**, não lista de pastas para criar hoje.
+
+## Prompt para o agente
+
+O bloco colável está em [`prompts/bootstrap.md`](prompts/bootstrap.md). É o mesmo contrato em [`AGENTS.md`](AGENTS.md), na forma de um pedido único: copiar o mínimo, preencher a mesa real, fechar uma sessão, não publicar catálogo nem contas.
+
+Por ferramenta (caminhos e limites de disco):
+
+- [Cursor](prompts/cursor.md)
+- [Claude](prompts/claude.md)
+- [ChatGPT](prompts/chatgpt.md)
+
+## Exemplo de estado atual
+
+O checkpoint não é uma lista de desejos. Comparar:
+
+- [vazio](examples/estado-atual/vazio.md) — template sem mesa
+- [preenchido](examples/estado-atual/preenchido.md) — `projeto-exemplo`, fato recente, o que não abrir hoje
 
 ## Continuidade entre sessões
 
@@ -182,7 +224,7 @@ Números no começo ordenam o Explorer. Cria-se pasta quando o primeiro arquivo 
   99-arquivo/
 ```
 
-O mínimo deste kit está em [`templates/vault/`](templates/vault/).
+O mínimo para o primeiro dia está em [`templates/vault-minimo/`](templates/vault-minimo/). A árvore completa e o `cliente-a` genérico estão em [`templates/vault/`](templates/vault/).
 
 Item simples e estável → **nota única**. Item com várias dimensões vivas → **pasta** com `visao.md` e satélites só os que tiverem conteúdo. Nunca pasta vazia; promove-se quando a nota passa de uma tela ou mistura assuntos.
 
@@ -240,18 +282,20 @@ Durante: tipo novo de operação → catálogo neste turno.
 
 No fim: diário, estado atual, pendências, decisão. Resumo de duas ou três linhas. Override: gravar só o bloco para colar.
 
-Stubs: [`examples/skills/`](examples/skills/) e [`examples/rules/`](examples/rules/).
+Stubs: [`examples/skills/`](examples/skills/) e [`examples/rules/`](examples/rules/). Contrato: [`AGENTS.md`](AGENTS.md).
 
 ## Adoção
 
-1. Copiar [`templates/vault/`](templates/vault/) para `/caminho/do/vault/` (Obsidian ou qualquer pasta Markdown).
-2. Preencher `estado-atual.md` e `prioridades.md` com a mesa **real** — não com pastas vazias.
-3. Copiar [`examples/skills/`](examples/skills/) para `~/.cursor/skills/` (ou o equivalente) e ajustar o caminho do vault.
+O caminho rápido está em [Como começar (15 minutos)](#como-começar-15-minutos). Abaixo, o mesmo processo com as camadas de ambiente:
+
+1. Copiar [`templates/vault-minimo/`](templates/vault-minimo/) para `/caminho/do/vault/`.
+2. Preencher `estado-atual.md` e `prioridades.md` com a mesa **real**.
+3. (Cursor) Copiar [`examples/skills/`](examples/skills/) para `~/.cursor/skills/` e ajustar o path do vault. Outros agentes: [`prompts/`](prompts/).
 4. Preencher o *próprio* `catalogo.md` da máquina. Esse arquivo **não** se publica (está no `.gitignore` deste kit).
 5. Copiar [`examples/rules/`](examples/rules/) se a ferramenta tiver always-on / glob.
-6. Rodar um ritual de verdade (retomar ou fechar). Sem o primeiro ciclo, o kit é pasta com nomes.
+6. Rodar **um** ritual de verdade (retomar ou fechar).
 
-Não se publica o vault real, o catálogo da máquina, nem pasta de contas com dados.
+Não se publica o vault real, o catálogo da máquina, nem pasta de contas com dados. Dificuldade na cópia ou no prompt: issue com o rótulo **adopção**.
 
 ## O que é estável e o que evolui
 
@@ -298,6 +342,14 @@ Não carrega templates nem stubs. Este repositório existe por isso. O vault rea
 
 Não. Publicam-se stubs e o padrão. `catalogo.md` e `snapshot.md` ficam fora do git público.
 
+### Como um agente instala o kit?
+
+Cole [`prompts/bootstrap.md`](prompts/bootstrap.md). O contrato permanente é [`AGENTS.md`](AGENTS.md). Não anexe o vault inteiro.
+
+### Este repositório serve de template no GitHub?
+
+Sim, se estiver marcado como Template no GitHub. **Use this template** cria uma cópia para o *seu* vault — deixe essa cópia privada. Este repositório público continua sendo o padrão, não a memória de ninguém.
+
 ### Isso aumenta o uso de tokens?
 
 O pacote mínimo reduz retrabalho. Ops em chat exclusivo. Catálogo para não retryar o mesmo wrap. Vault **fora** do always-on.
@@ -306,12 +358,18 @@ O pacote mínimo reduz retrabalho. Ops em chat exclusivo. Catálogo para não re
 
 ```text
 segundo-cerebro-operacional/
-  README.md
+  README.md                 spec (canônico)
+  AGENTS.md                 contrato curto para qualquer agente
+  llms.txt                  sumário para motores generativos
   LICENSE
   .github/FUNDING.yml
-  templates/vault/          cockpit, modelos, cliente-a genérico
-  examples/skills/          segundo-cerebro · ambiente-local (exemplos)
+  .github/ISSUE_TEMPLATE/   adoção
+  prompts/                  bootstrap · Cursor · Claude · ChatGPT
+  templates/vault-minimo/   dia 1 (cockpit)
+  templates/vault/          árvore + cliente-a genérico
+  examples/skills/          segundo-cerebro · ambiente-local
   examples/rules/           captura, ponte, privacidade, glob, commits
+  examples/estado-atual/    vazio vs preenchido
 ```
 
 Placeholders públicos: `cliente-a`, `projeto-exemplo`, `/caminho/do/vault`. Nada de conta real.

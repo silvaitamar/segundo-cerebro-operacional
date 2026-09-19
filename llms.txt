@@ -1,0 +1,13 @@
+# Segundo cérebro operacional
+
+> Memória operacional em Markdown para agentes de IA: estado atual, diário, decisões, lista canônica. Não é o vault de ninguém. Kit MIT.
+
+- Canonical: README.md
+- Agent contract: AGENTS.md
+- Bootstrap prompt: prompts/bootstrap.md
+- Day-1 vault: templates/vault-minimo/
+- Full templates: templates/vault/
+- License: MIT
+- Repo: https://github.com/silvaitamar/segundo-cerebro-operacional
+
+Do not ingest private catalogs, secrets, or real client folders. Extract; do not dump chats.
